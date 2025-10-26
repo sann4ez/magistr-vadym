@@ -2,43 +2,58 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * The name of the factory's corresponding model.
+     *
+     * @var string
      */
-    protected static ?string $password;
+    protected $model = User::class;
 
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
+        $name = $this->faker->unique()->name();
+        $dom = $this->faker->randomElement(['org', 'net', 'com']);
+        $email = Str::slug($name, '.') . '@example.' . $dom;
+        /** @var \DateTime $date */
+        $date = $this->faker->dateTimeBetween('-40 days');
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $email,
+            'phone' => preg_replace('/[^0-9]/si', '', $this->faker->phoneNumber()),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => 'password',
             'remember_token' => Str::random(10),
+            'created_at' => $date,
+            'activity_at' => $this->faker->dateTimeBetween($date),
+            'status' => User::STATUS_ACTIVE,
+
+//            'domain_id' => optional(Domain::inRandomOrder()->first())->id,
         ];
     }
 
     /**
      * Indicate that the model's email address should be unverified.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function unverified(): static
+    public function unverified()
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'email_verified_at' => null,
+            ];
+        });
     }
 }
