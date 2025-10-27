@@ -11,6 +11,7 @@
         "fomvasss/laravel-medialibrary-extension": "^6.2",
         "fomvasss/laravel-simple-taxonomy": "^1.6",
         "fomvasss/laravel-variables": "^5.7",
+        "ka4ivan/laravel-logger": "^2.0",
         "ka4ivan/laravel-sluggable": "^1.0",
         "ka4ivan/laravel-view-sortable": "^1.1",
         "laravel/framework": "^12.0",
@@ -28,7 +29,8 @@
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "phpunit/phpunit": "^11.5.3",
+        "spatie/laravel-web-tinker": "^1.10"
     },
     "autoload": {
         "psr-4": {
