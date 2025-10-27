@@ -26,7 +26,7 @@ trait InteractsWithMedia
                 $this->addOgMediaConversion('image');
             break;
             case 'post':
-                $options = \Domain::getOpt('posts.conversions', []);
+//                $options = \Domain::getOpt('posts.conversions', []);
                 $this->addOgMediaConversion('image');
             break;
             case 'item':

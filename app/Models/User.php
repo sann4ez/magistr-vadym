@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Image\Enums\Fit;
 use Fomvasss\MediaLibraryExtension\HasMedia\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -25,10 +26,17 @@ class User extends Authenticatable implements HasMedia
     use HasFactory,
         Notifiable,
         HasUuids,
+        HasApiTokens,
         HasStaticLists,
         HasDatetimeFormatterTz,
         InteractsWithMedia,
         HasRoles;
+
+    const ROLE_GUEST = 'guest';
+    const ROLE_CLIENT = 'client';
+    const ROLE_DROPSHIPPER = 'dropshipper';
+    const ROLE_WHOLESALER = 'wholesaler';
+    const ROLE_ADMIN = 'admin';
 
     const STATUS_ACTIVE = 'active';
     const STATUS_BLOCKED = 'blocked';
@@ -162,6 +170,16 @@ class User extends Authenticatable implements HasMedia
         $records = Role::select('name')->get()->map(fn($r) => ['name' => $r->name, 'key' => $r->name])->toArray();
 
         return self::staticListBuild($records, $columnKey, $indexKey, $options);
+    }
+
+    /**
+     * Ролі, дозволені при реєстрації.
+     *
+     * @return string[]
+     */
+    public static function allowedRegisterRoles(): array
+    {
+        return [self::ROLE_DROPSHIPPER, self::ROLE_CLIENT, self::ROLE_WHOLESALER];
     }
 
     /**

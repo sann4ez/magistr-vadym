@@ -6,6 +6,7 @@ return [
      * Models for which slugs will be created using the command
      */
     'models' => [
+        \App\Models\Post::class,
 //        \App\Models\Page::class,
 //        \App\Models\Product::class,
     ],

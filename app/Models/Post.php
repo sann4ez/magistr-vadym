@@ -6,6 +6,7 @@ use App\Http\Client\Api\Resources\Article\ArticleListResource;
 use App\Http\Client\Api\Resources\Meditation\MeditationListResource;
 use App\Models\Traits\HasDatetimeFormatterTz;
 use App\Models\Traits\HasNavigable;
+use App\Models\Traits\HasSlugTrait;
 use App\Models\Traits\HasStaticLists;
 use App\Models\Traits\HasTaxonomies;
 //use App\Models\Traits\HasSeo;
@@ -21,7 +22,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Ka4ivan\Sluggable\Models\Traits\HasSlugs;
+//use Ka4ivan\Sluggable\Models\Traits\HasSlugs;
 
 class Post extends Model implements HasMedia
 {
@@ -32,7 +33,7 @@ class Post extends Model implements HasMedia
         HasTaxonomies,
         InteractsWithMedia,
         HasUuids,
-        HasSlugs,
+        HasSlugTrait,
         HasNavigable;
 //        HasAddFields,
 //        PostTokens,
@@ -302,9 +303,9 @@ class Post extends Model implements HasMedia
     public function getClientStates(): array
     {
         return [
-            'is_favorite' => $this->isFavorite(),
-            'is_check' => $this->isCheck(),
-            'is_check_plan_today' => $this->isCheckPlanToday(),
+//            'is_favorite' => $this->isFavorite(),
+//            'is_check' => $this->isCheck(),
+//            'is_check_plan_today' => $this->isCheckPlanToday(),
         ];
     }
 
@@ -358,10 +359,10 @@ class Post extends Model implements HasMedia
 //        };
 //    }
 //
-//    public function getTeaser(): string
-//    {
-//        return $this->teaser ?: Str::limit(strip_tags($this->body ?: ''), 1500, '');
-//    }
+    public function getTeaser(): string
+    {
+        return $this->teaser ?: Str::limit(strip_tags($this->body ?: ''), 1500, '');
+    }
 //
 //    public function getSeoTags(): array
 //    {
