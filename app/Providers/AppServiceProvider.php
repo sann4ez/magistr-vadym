@@ -48,7 +48,6 @@ class AppServiceProvider extends ServiceProvider
             'page' => \App\Models\Page::class,
             'block' => \App\Models\Block::class,
             'post' => \App\Models\Post::class,
-//            'lead' => \App\Models\Lead::class,
         ]);
     }
 }

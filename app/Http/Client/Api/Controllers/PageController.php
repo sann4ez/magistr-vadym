@@ -3,7 +3,6 @@
 namespace App\Http\Client\Api\Controllers;
 
 use App\Http\Client\Api\Resources\PageResource;
-use App\Http\Client\Api\Resources\SeoResource;
 use App\Http\Client\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
