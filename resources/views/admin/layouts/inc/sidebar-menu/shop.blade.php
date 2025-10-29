@@ -47,6 +47,20 @@
         </li>
 
         <li class="nav-item">
+            <a href="/admin/pages" class="nav-link" data-pat="pages">
+                <i class="nav-icon far fa-file-alt"></i>
+                <p>Сторінки</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/admin/blocks" class="nav-link" data-pat="blocks">
+                <i class="nav-icon fas fa-shapes"></i>
+                <p>Блоки</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a href="/admin/users" class="nav-link" data-pat="users">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Користувачі</p>

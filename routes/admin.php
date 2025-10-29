@@ -14,6 +14,16 @@ Route::group([
     Route::redirect('/', '/admin/users');
     Route::view('/hello', 'admin.hello');
 
+    // PAGES
+    Route::resource('pages', \App\Http\Admin\Controllers\PageController::class, ['except' => 'show']);
+    Route::post('pages/{page}/blocks/attach', [\App\Http\Admin\Controllers\PageController::class, 'blocksAttach'])->name('pages.blocks.attach');
+    Route::post('pages/{page}/blocks/detach', [\App\Http\Admin\Controllers\PageController::class, 'blocksDetach'])->name('pages.blocks.detach');
+    Route::post('pages/{page}/blocks/order', [\App\Http\Admin\Controllers\PageController::class, 'blocksOrder'])->name('pages.blocks.order');
+
+    // BLOCKS
+    Route::resource('blocks', \App\Http\Admin\Controllers\BlockController::class);
+    Route::get('blocks/{block}/cloning', [\App\Http\Admin\Controllers\BlockController::class, 'cloning'])->name('blocks.cloning');
+
     // POSTS
     Route::resource('articles', \App\Http\Admin\Controllers\ArticleController::class, ['except' => 'show'])/*->middleware('can:post.read')*/;
     Route::resource('meditations', \App\Http\Admin\Controllers\MeditationController::class, ['except' => 'show'])/*->middleware('can:post.read')*/;

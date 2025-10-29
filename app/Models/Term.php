@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Facades\Gate;
-use Ka4ivan\Sluggable\Models\Traits\HasSlugs;
-use App\Models\{
-    Traits\HasDatetimeFormatterTz,
-//    Traits\HasDomain,
+//use Ka4ivan\Sluggable\Models\Traits\HasSlugs;
+use App\Models\{Traits\HasDatetimeFormatterTz,
     Traits\HasNavigable,
+    Traits\HasSlugTrait,
     Traits\HasStaticLists,
-//    Traits\HasSeo,
     Traits\InteractsWithMedia};
 //    Traits\TermTokens,
 //    Translations\Translatable};
@@ -22,7 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Term extends \Fomvasss\SimpleTaxonomy\Models\Term implements HasMedia
 {
-    use HasSlugs,
+    use HasSlugTrait,
 //        Translatable,
         InteractsWithMedia,
 //        HasSeo,

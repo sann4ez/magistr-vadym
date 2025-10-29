@@ -66,6 +66,7 @@ class Post extends Model implements HasMedia
     protected array $mediaSingleCollections = [
         'image',          // Основне фото - для каталогу/списку
         'audio',          // Звуки
+        'video',
     ];
 
     public $translatedAttributes = ['name', 'body', 'teaser'];

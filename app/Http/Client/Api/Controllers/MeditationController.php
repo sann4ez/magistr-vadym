@@ -6,12 +6,9 @@ use App\Http\Client\Api\Resources\Meditation\MeditationCategoryListResource;
 use App\Http\Client\Api\Resources\Meditation\MeditationCategoryShowResource;
 use App\Http\Client\Api\Resources\Meditation\MeditationListResource;
 use App\Http\Client\Api\Resources\Meditation\MeditationShowResource;
-use App\Http\Client\Api\Resources\SeoResource;
 use App\Http\Client\Controllers\Controller;
-use App\Models\Item;
 use App\Models\Post;
 use App\Models\Term;
-use App\Models\Watched;
 use Illuminate\Http\Request;
 
 final class MeditationController extends Controller
@@ -33,7 +30,7 @@ final class MeditationController extends Controller
     public function index(Request $request)
     {
         $meditations = Post::query()
-            ->with('media.model.domain','translations', 'category.translations')
+            ->with('media', 'category')
             ->whereType(Post::TYPE_MEDITATION)
             ->filterable([], ['vocabulary' => Term::VOCABULARY_MEDITATION_CATEGORIES])->paginate();
 
@@ -78,14 +75,14 @@ final class MeditationController extends Controller
     public function show(Request $request, string $slug)
     {
         $meditation = Post::query()
-            ->with('media', 'translations', /*'seo',*/ 'categories.translations', 'category.translations')
+            ->with('media','category')
             ->where('slug', $slug)
             ->firstOrFail();
 
         return MeditationShowResource::make($meditation)->additional([
 //            'seo' => SeoResource::make($meditation),
-            'crumbs' => $meditation->getBreadcrumbs(),
-            'sblocks' => \Block::getBlocksResource(\Domain::getOpt('posts.sblocks', []), true),
+//            'crumbs' => $meditation->getBreadcrumbs(),
+//            'sblocks' => \Block::getBlocksResource(\Domain::getOpt('posts.sblocks', []), true),
         ]);
     }
 
@@ -100,7 +97,7 @@ final class MeditationController extends Controller
     public function categories(Request $request)
     {
         $terms = Term::query()
-            ->with('media', 'translations')
+            ->with('media')
             ->whereVocabulary(Term::VOCABULARY_MEDITATION_CATEGORIES)
             ->filterable()->get();
 
@@ -117,10 +114,10 @@ final class MeditationController extends Controller
     public function category(Request $request, Term $category)
     {
         /** @var Term $term */
-        $term = $category->checkAllowed()->load('media', 'translations');
+        $term = $category->checkAllowed()->load('media');
 
         return MeditationCategoryShowResource::make($term)->additional([
-            'seo' => $term->relationLoaded('seo') ? SeoResource::make($term) : null
+//            'seo' => $term->relationLoaded('seo') ? SeoResource::make($term) : null
         ]);
     }
 
@@ -138,9 +135,9 @@ final class MeditationController extends Controller
                 $add['categories'] = MeditationCategoryListResource::collection(Term::whereVocabulary(Term::VOCABULARY_MEDITATION_CATEGORIES)->with('translations')->get());
             }
 
-            if (in_array('info', $with)) {
-                $add['info'] = Item::getList(Item::TYPE_POSTS)->where('key', Post::TYPE_MEDITATION)->first();
-            }
+//            if (in_array('info', $with)) {
+//                $add['info'] = Item::getList(Item::TYPE_POSTS)->where('key', Post::TYPE_MEDITATION)->first();
+//            }
         }
 
         return $add;

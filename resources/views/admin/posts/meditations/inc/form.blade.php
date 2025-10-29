@@ -32,6 +32,8 @@
          ]) !!}
 
         {!! Lte3::mediaImage('image', null, ['label' => 'Зображення']) !!}
+
+        {!! Lte3::mediaFile('video', null, ['label' => 'Відео', 'accept' => 'video/*']) !!}
     </div>
 </div>
 

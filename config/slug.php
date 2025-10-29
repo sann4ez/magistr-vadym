@@ -14,7 +14,7 @@ return [
     /**
      * Slug model
      */
-    'model' => \Ka4ivan\Sluggable\Models\Slug::class,
+    'model' => \App\Models\Slug::class,
 
     /**
      * What attributes do we use to build the slug?

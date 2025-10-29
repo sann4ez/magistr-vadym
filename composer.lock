@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "160fa15127aa8d56375bc9a43b2b5946",
+    "content-hash": "99f26d0c1bfac299ee2921e8ff6e8045",
     "packages": [
         {
             "name": "brick/math",
@@ -585,6 +585,66 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "fomvasss/laravel-blocks",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fomvasss/laravel-blocks.git",
+                "reference": "7e5182441630f574c54a462dfe161b34cc968452"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fomvasss/laravel-blocks/zipball/7e5182441630f574c54a462dfe161b34cc968452",
+                "reference": "7e5182441630f574c54a462dfe161b34cc968452",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9|^10|^11|^12|^13",
+                "intervention/image": "^3",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Block": "Fomvasss\\Blocks\\Facades\\Block"
+                    },
+                    "providers": [
+                        "Fomvasss\\Blocks\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fomvasss\\Blocks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fomvasss",
+                    "email": "fomvasss@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Universal blocks system for Laravel (static & dynamic content)",
+            "homepage": "https://github.com/fomvasss/laravel-blocks",
+            "keywords": [
+                "blocks",
+                "content",
+                "laravel",
+                "laravel-blocks"
+            ],
+            "support": {
+                "issues": "https://github.com/fomvasss/laravel-blocks/issues",
+                "source": "https://github.com/fomvasss/laravel-blocks/tree/1.4.0"
+            },
+            "time": "2025-10-10T14:08:39+00:00"
         },
         {
             "name": "fomvasss/laravel-lte3",
@@ -1682,74 +1742,6 @@
                 "source": "https://github.com/ka4ivan/laravel-logger/tree/2.0.2"
             },
             "time": "2025-08-18T19:06:41+00:00"
-        },
-        {
-            "name": "ka4ivan/laravel-sluggable",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ka4ivan/laravel-sluggable.git",
-                "reference": "2edd7414398710bcea26684b839c2ba7568a6d44"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ka4ivan/laravel-sluggable/zipball/2edd7414398710bcea26684b839c2ba7568a6d44",
-                "reference": "2edd7414398710bcea26684b839c2ba7568a6d44",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
-                "php": "^8.0.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Ka4ivan\\Sluggable\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ka4ivan\\Sluggable\\": "src",
-                    "Ka4ivan\\Sluggable\\Database\\Factories\\": "database/factories"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kachula Ivan",
-                    "email": "ka4ivan.dev@gmail.com",
-                    "homepage": "https://github.com/ka4ivan",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Fomin Vasyl",
-                    "email": "fomvasss@gmail.com",
-                    "homepage": "https://github.com/fomvasss",
-                    "role": "Idea"
-                }
-            ],
-            "description": "Generate slugs when saving Eloquent models (multilingualism, multigroups, uniqueness)",
-            "keywords": [
-                "Unique Slug",
-                "eloquent",
-                "ka4ivan",
-                "laravel",
-                "model",
-                "multilingual",
-                "seo",
-                "slug",
-                "sluggable"
-            ],
-            "support": {
-                "issues": "https://github.com/ka4ivan/laravel-sluggable/issues",
-                "source": "https://github.com/ka4ivan/laravel-sluggable/tree/1.0.2"
-            },
-            "time": "2025-04-06T20:04:23+00:00"
         },
         {
             "name": "ka4ivan/laravel-view-sortable",
@@ -4425,16 +4417,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.13",
+            "version": "v0.12.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "d86c2f750e72017a5cdb1b9f1cef468a5cbacd1e"
+                "reference": "95c29b3756a23855a30566b745d218bee690bef2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/d86c2f750e72017a5cdb1b9f1cef468a5cbacd1e",
-                "reference": "d86c2f750e72017a5cdb1b9f1cef468a5cbacd1e",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/95c29b3756a23855a30566b745d218bee690bef2",
+                "reference": "95c29b3756a23855a30566b745d218bee690bef2",
                 "shasum": ""
             },
             "require": {
@@ -4455,7 +4447,6 @@
             "suggest": {
                 "composer/class-map-generator": "Improved tab completion performance with better class discovery.",
                 "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
-                "ext-pdo-sqlite": "The doc command requires SQLite to work.",
                 "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well."
             },
             "bin": [
@@ -4499,9 +4490,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.13"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.14"
             },
-            "time": "2025-10-20T22:48:29+00:00"
+            "time": "2025-10-27T17:15:31+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -5002,16 +4993,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "6.21.0",
+            "version": "6.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "6a118e8855dfffcd90403aab77bbf35a03db51b3"
+                "reference": "8c87966ddc21893bfda54b792047473703992625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6a118e8855dfffcd90403aab77bbf35a03db51b3",
-                "reference": "6a118e8855dfffcd90403aab77bbf35a03db51b3",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/8c87966ddc21893bfda54b792047473703992625",
+                "reference": "8c87966ddc21893bfda54b792047473703992625",
                 "shasum": ""
             },
             "require": {
@@ -5073,7 +5064,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/6.21.0"
+                "source": "https://github.com/spatie/laravel-permission/tree/6.22.0"
             },
             "funding": [
                 {
@@ -5081,7 +5072,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-23T16:08:05+00:00"
+            "time": "2025-10-27T21:58:45+00:00"
         },
         {
             "name": "spatie/temporary-directory",

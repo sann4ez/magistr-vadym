@@ -21,14 +21,10 @@ final class MeditationController extends Controller
     public function index(Request $request)
     {
         $posts = Post::query()
-            ->with(/*'translations', */'category')
+            ->with('category')
             ->whereType(Post::TYPE_MEDITATION)
             ->filterable()
             ->latest();
-
-//        if ($request->has('_export')) {
-//            return \Excel::download(new PostsExport($posts->get()), "export-meditations-".time().".{$request->_export}");
-//        }
 
         return view('admin.posts.meditations.index', ['posts' => $posts->paginate()]);
     }
@@ -74,8 +70,6 @@ final class MeditationController extends Controller
             $post->mediaManage($request);
 //        }
 
-//        ReindexPostAction::run($post);
-
         return redirect()->route('admin.meditations.edit', $post)
             ->with('success', trans('alerts.store.success'));
     }
@@ -106,22 +100,19 @@ final class MeditationController extends Controller
         $meditation->syncTerms($request->get('terms', []), [$meditation->category_id]);
 
         // Аудіофайл
-        $file = $request->file('audio');
-        if (!is_null($file)) {
-            $ffprobe = FFProbe::create();
-            $duration = $ffprobe
-                ->format($file->getRealPath())
-                ->get('duration');
-
+//        $file = $request->file('audio');
+//        if (!is_null($file)) {
+//            $ffprobe = FFProbe::create();
+//            $duration = $ffprobe
+//                ->format($file->getRealPath())
+//                ->get('duration');
+//
+//            $meditation->mediaManage($request);
+//            $meditation->setAttribute('duration', intval($duration))->saveQuietly();
+//
+//        } else {
             $meditation->mediaManage($request);
-            $meditation->setAttribute('duration', intval($duration))->saveQuietly();
-
-        } else {
-            $meditation->mediaManage($request);
-        }
-
-
-        ReindexPostAction::run($meditation);
+//        }
 
         return redirect()->route('admin.meditations.edit', $meditation)
             ->with('success', trans('alerts.update.success'));
@@ -138,13 +129,4 @@ final class MeditationController extends Controller
         return redirect()->back()
             ->with('success', trans('alerts.destroy.success'));
     }
-
-    // TODO: Потрібно доробити
-//    public function import(Request $request)
-//    {
-//        \Excel::import(new PostsImport(), $request->file('file'));
-//
-//        return redirect()->back()
-//            ->with('success', trans('alerts.update.success'));
-//    }
 }

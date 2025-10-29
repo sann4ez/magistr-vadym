@@ -22,11 +22,11 @@ final class MeditationShowResource  extends JsonResource
             'states' => $this->getClientStates(),
             'duration' => $this->duration,
             'published_at' => $this->getDatetime('published_at'),
+
             'category' => $this->whenLoaded('category', fn() => MeditationCategoryListResource::make($this->category)),
-            'categories' => $this->whenLoaded('categories', fn() => MeditationCategoryListResource::collection($this->categories)),
+
             'image' => $this->whenLoaded('media', fn () => MediaShowResource::make($this->getMainMedia('image'))),
-            'sound' => $this->when($this->sound_id, fn() => SoundListResource::make(Post::with('media')->find($this->sound_id))),
-            'audio' => $this->whenLoaded('media', fn () => MediaShowResource::make($this->getMainMedia('audio'))),
+            'video' => $this->whenLoaded('media', fn () => MediaShowResource::make($this->getMainMedia('video'))),
         ];
     }
 }

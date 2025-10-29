@@ -88,7 +88,7 @@ final class ArticleController extends Controller
     public function categories(Request $request)
     {
         $terms = Term::query()
-            ->with('media', 'translations')
+            ->with('media')
             ->whereVocabulary(Term::VOCABULARY_ARTICLE_CATEGORIES)
             ->filterable()->get();
 
@@ -105,7 +105,7 @@ final class ArticleController extends Controller
     public function category(Request $request, Term $category)
     {
         /** @var Term $term */
-        $term = $category->checkAllowed()->load('media', 'translations');
+        $term = $category->checkAllowed()->load('media');
 
         return ArticleCategoryShowResource::make($term)->additional([
 //            'seo' => $term->relationLoaded('seo') ? SeoResource::make($term) : null

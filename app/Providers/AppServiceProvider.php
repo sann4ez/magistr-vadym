@@ -45,8 +45,8 @@ class AppServiceProvider extends ServiceProvider
 //            'seo' => \App\Models\Seo::class,
             'term' => \App\Models\Term::class,
 
-//            'page' => \App\Models\Page::class,
-//            'block' => \App\Models\Block::class,
+            'page' => \App\Models\Page::class,
+            'block' => \App\Models\Block::class,
             'post' => \App\Models\Post::class,
 //            'lead' => \App\Models\Lead::class,
         ]);
