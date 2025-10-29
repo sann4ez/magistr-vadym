@@ -61,6 +61,9 @@ Route::group(['middleware' => [
 //    Route::get('blocks', [\App\Http\Client\Api\Controllers\BlockController::class, 'index']);
 //    Route::get('blocks/{block:slug}', [\App\Http\Client\Api\Controllers\BlockController::class, 'show']);
 
+    // PAGES
+    Route::get('pages/{page:slug}', [\App\Http\Client\Api\Controllers\PageController::class, 'show']);
+
     // ARTICLES
     Route::get('articles', [\App\Http\Client\Api\Controllers\ArticleController::class, 'index']);
     Route::get('articles/categories', [\App\Http\Client\Api\Controllers\ArticleController::class, 'categories']);
