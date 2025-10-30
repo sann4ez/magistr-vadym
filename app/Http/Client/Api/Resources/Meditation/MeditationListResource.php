@@ -20,8 +20,8 @@ class MeditationListResource extends JsonResource
             'slug' => $this->slug,
             'type' => $this->type,
             'name' => $this->name,
+            'body' => $this->body,
             'duration' => $this->duration,
-            'is_free' => $this->isFree(),
             'states' => $this->getClientStates(),
             'published_at' => $this->getDatetime('published_at'),
 

@@ -21,50 +21,6 @@
             </li>
         @endcan
 
-{{--        @php($domains = \Domain::list())--}}
-{{--        @if($domains->count() > 1)--}}
-{{--            <li class="nav-item dropdown">--}}
-{{--                <a id="dropdownSubMenu2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"--}}
-{{--                   class="nav-link dropdown-toggle"><i class="fas fa-database"></i> <span class="nav-item-title">{{ \Domain::getSelected('host') }}</span></a>--}}
-{{--                <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow"--}}
-{{--                    style="left: 0px; right: inherit;">--}}
-{{--                    @foreach($domains as $domain)--}}
-{{--                        <li><a href="{{ \Domain::fullUrlWithDomain($domain) }}" class="dropdown-item @if(\Domain::getSelected('host') === $domain->host) text-bold @endif">{{ $domain->host }}</a></li>--}}
-{{--                    @endforeach--}}
-
-{{--                </ul>--}}
-{{--            </li>--}}
-{{--        @endif--}}
-
-{{--        @php($locales = \Domain::getSupportedLocales())--}}
-{{--        <li class="nav-item dropdown">--}}
-{{--            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">--}}
-{{--                <i class="flag-icon flag-icon-{{ \Domain::getLocaleData()['flag'] ?? \Domain::getLocaleData()['code'] ?? '' }}"></i>--}}
-{{--            </a>--}}
-{{--            <div class="dropdown-menu dropdown-menu-right p-0" style="left: inherit; right: 0px;">--}}
-{{--                --}}{{--<a href="{{ \Domain::fullUrlWithoutLocale() }}" class="dropdown-item"><i class=" mr-2"></i></a>--}}
-{{--                @foreach($locales as $val)--}}
-{{--                    <a href="{{ \Domain::fullUrlWithLocale($val['code']) }}" class="dropdown-item @if($val['code'] === \Domain::getLocale()) actice @endif">--}}
-{{--                        @if($flag = $val['flag'] ?? $val['code'] ?? '')<i class="flag-icon flag-icon-{{$flag}} mr-2"></i>@endif {{ $val['name'] }}--}}
-{{--                    </a>--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
-{{--        </li>--}}
-
-{{--        <li class="nav-item" data-toggle="tooltip" title="Тема інтерфейсу">--}}
-{{--            @if(session('lte_theme') === 'dark' || config('lte3.view.dark_mode'))--}}
-{{--                <a href="{{ route('admin.profile.options', ['key' => 'lte_theme', 'value' => 'light']) }}" class="nav-link"> <i class="fas fa-sun"></i></a>--}}
-{{--            @else--}}
-{{--                <a href="{{ route('admin.profile.options', ['key' => 'lte_theme', 'value' => 'dark']) }}" class="nav-link"> <i class="fas fa-moon"></i></a>--}}
-{{--            @endif--}}
-{{--        </li>--}}
-
-{{--        @if($url = \Domain::getSelectedUrlWithHost())--}}
-{{--            <li class="nav-item--}}{{-- d-none d-sm-inline-block--}}{{--" data-toggle="tooltip" title="Відвідати сайт">--}}
-{{--                <a href="{{ $url }}" class="nav-link" target="_blank"> <i class="fas fa-chevron-circle-right"></i></a>--}}
-{{--            </li>--}}
-{{--        @endif--}}
-
     </ul>
 
     <!-- Right navbar links -->
@@ -79,13 +35,13 @@
         @auth
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{--{{ auth()->user()->getAvatar() }}--}}" class="user-image img-circle elevation-2"
+                    <img src="{{ auth()->user()->getAvatar() }}" class="user-image img-circle elevation-2"
                          alt="User Image">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
-                        <img src="{{--{{ auth()->user()->getAvatar() }}--}}" class="img-circle elevation-2"
+                        <img src="{{ auth()->user()->getAvatar() }}" class="img-circle elevation-2"
                              alt="User Image">
 
                         <p>

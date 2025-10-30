@@ -94,7 +94,7 @@ class Page extends Model implements HasMedia
             [
                 'key' => 'home',
                 'name' => 'Головна',
-                'blocks' => ['contacts',],
+                'blocks' => ['hero', 'support_section', 'posts', 'harmony_tech', 'meditations'],
             ],
         ];
 

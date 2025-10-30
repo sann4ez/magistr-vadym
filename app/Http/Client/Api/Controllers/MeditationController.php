@@ -80,9 +80,7 @@ final class MeditationController extends Controller
             ->firstOrFail();
 
         return MeditationShowResource::make($meditation)->additional([
-//            'seo' => SeoResource::make($meditation),
-//            'crumbs' => $meditation->getBreadcrumbs(),
-//            'sblocks' => \Block::getBlocksResource(\Domain::getOpt('posts.sblocks', []), true),
+            'crumbs' => $meditation->getBreadcrumbs(),
         ]);
     }
 

@@ -110,6 +110,8 @@ return [
     |
     */
 
+    'dev_user' => env('USER_DEV') ? explode(',', env('USER_DEV')) : [],
+
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 ];

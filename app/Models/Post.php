@@ -409,23 +409,30 @@ class Post extends Model implements HasMedia
     /**
      * @return array
      */
-//    public function getBreadcrumbs(): array
-//    {
-//        $terms = [];
-//        if ($this->category_id) {
-//            $terms = Term::with('translations')->defaultOrder()->ancestorsAndSelf($this->category_id);
-//        }
-//
-//        $res = [];
-//        /** @var Term $term */
-//        foreach ($terms as $term) {
-//            $res[] = $term->only('id', 'slug', 'name') + ['model' => 'term'];
-//        }
-//
-//        $res[] = $this->only('id', 'slug', 'name') + ['model' => 'post'];
-//
-//        return $res;
-//    }
+    public function getBreadcrumbs(): array
+    {
+        $type = $this->type;
+
+        $res = [];
+
+        if ($type === self::TYPE_ARTICLE) {
+            $res[] = [
+                'name' => 'Блог',
+                'slug' => 'articles',
+                'model' => 'section',
+            ];
+        } elseif ($type === self::TYPE_MEDITATION) {
+            $res[] = [
+                'name' => 'Медитації',
+                'slug' => 'meditations',
+                'model' => 'section',
+            ];
+        }
+
+        $res[] = $this->only('id', 'slug', 'name') + ['model' => 'post'];
+
+        return $res;
+    }
 
     public function scopeFilterable(Builder $builder, array $attrs = [], array $default = [])
     {

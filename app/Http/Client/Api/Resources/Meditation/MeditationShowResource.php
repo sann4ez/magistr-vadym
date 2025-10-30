@@ -3,7 +3,6 @@
 namespace App\Http\Client\Api\Resources\Meditation;
 
 use App\Http\Client\Api\Resources\MediaShowResource;
-use App\Http\Client\Api\Resources\Sound\SoundListResource;
 use App\Models\Post;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +15,7 @@ final class MeditationShowResource  extends JsonResource
             'entity' => 'post',
             'type' => Post::TYPE_MEDITATION,
             'name' => $this->name,
+            'body' => $this->body,
             'slug' => $this->slug,
             'teaser' => $this->getTeaser(),
             'is_free' => $this->isFree(),

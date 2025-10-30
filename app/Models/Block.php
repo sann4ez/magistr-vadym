@@ -64,6 +64,31 @@ class Block extends \Fomvasss\Blocks\Models\Block
     {
         $status = [
             [
+                'key' => 'hero',
+                'name' => 'Верхній блок',
+                'screen' => '',
+            ],
+            [
+                'key' => 'support_section',
+                'name' => 'Ми тут, щоб допомогти почуватися вам краще',
+                'screen' => '',
+            ],
+            [
+                'key' => 'posts',
+                'name' => 'Статті',
+                'screen' => '',
+            ],
+            [
+                'key' => 'harmony_tech',
+                'name' => 'Технології для гармонійного життя',
+                'screen' => '',
+            ],
+            [
+                'key' => 'meditations',
+                'name' => 'Медитації',
+                'screen' => '',
+            ],
+            [
                 'key' => 'contacts',
                 'name' => 'Контакти',
                 'screen' => '',

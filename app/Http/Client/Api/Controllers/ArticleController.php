@@ -69,9 +69,7 @@ final class ArticleController extends Controller
             ->firstOrFail();
 
         return ArticleShowResource::make($article)->additional([
-//            'seo' => SeoResource::make($article),
-//            'recommends' => ArticleListResource::collection($article->getRecommends()),
-//            'crumbs' => $article->getBreadcrumbs(),
+            'crumbs' => $article->getBreadcrumbs(),
         ]);
     }
 
