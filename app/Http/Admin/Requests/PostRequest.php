@@ -2,8 +2,6 @@
 
 namespace App\Http\Admin\Requests;
 
-use App\Models\Post;
-
 final class PostRequest extends FormRequest
 {
     /**
@@ -21,23 +19,11 @@ final class PostRequest extends FormRequest
             'is_free' => 'nullable|boolean',
             'published_at' => 'nullable|date',
             'category_id' => ['sometimes', 'exists:terms,id',],
-            'sound_id' => ['sometimes', 'required', 'exists:posts,id',],
-            //'image' => 'nullable|image'
-//            'soun'
         ];
     }
 
     protected function prepareForValidation()
     {
-//        if ($this->isMethod('post') || $this->has('slug')) {
-//            if ($slug = $this->slug ?? $this->name) {
-//                $model = $this->route('post') ?: $this->route('article') ?: $this->route('meditation') ?: $this->route('breathing') ?: $this->route('sound') ?: $this->route('yoga');
-//                    $this->merge([
-//                    'slug' => Post::slugGenerate($slug, $model),
-//                ]);
-//            }
-//        }
-
         $this->prepareForValidationDatetimeValues('published_at');
     }
 
@@ -53,8 +39,6 @@ final class PostRequest extends FormRequest
             'status',
             'published_at',
             'category_id',
-            'sound_id',
-            'domain_id',
         ]);
 
         if ($this->isMethod('POST')) {

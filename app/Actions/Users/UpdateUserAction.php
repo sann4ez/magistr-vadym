@@ -20,7 +20,7 @@ final class UpdateUserAction
         }
 
         $user->update(Arr::only($data, [
-            'login', 'email', 'phone', 'name', 'birthday', 'gender', 'added', 'comment', 'status', 'password', 'domain_id',
+            'login', 'email', 'phone', 'name', 'lastname', 'birthday', 'gender', 'added', 'comment', 'status', 'password', 'domain_id',
         ]));
 
         if (Arr::has($data, 'roles')) {

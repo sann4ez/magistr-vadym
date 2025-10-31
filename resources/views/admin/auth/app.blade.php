@@ -30,7 +30,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="{{ url(config('lte3.dashboard_slug')) }}" class="h1">{!! config('lte3.logo') !!}</a>
+            <a href="#" class="h1">{!! config('lte3.logo') !!}</a>
         </div>
     @yield('content')
     <!-- /.card-body -->

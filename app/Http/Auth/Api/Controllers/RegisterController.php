@@ -5,8 +5,6 @@ namespace App\Http\Auth\Api\Controllers;
 use App\Actions\Users\StoreUserAction;
 use App\Http\Auth\Api\Requests\RegisterRequest;
 use App\Models\User;
-//use App\Support\EmailServices;
-use Illuminate\Auth\Events\Registered;
 
 final class RegisterController extends Controller
 {
@@ -17,14 +15,6 @@ final class RegisterController extends Controller
      *  @apiGroup Authorisation
      *
      *  @apiDescription Реєстрація нового користувача за допомогою Email.
-     *  Після успішної реєстрації користувач отримає лист для підтвердження електронної пошти.<br>
-     *
-     *  У кожному запиті необхідно передавати аліас поточного домену:
-     *  - Параметр запиту: `sHost=dropshop` **або** заголовок: `sHost: dropshop`
-     *
-     *  Додатково можна передавати локаль і кошик:
-     *  - Локаль: `sLocale=uk` (Header: `sLocale: uk`)
-     *  - ID кошика: `sCart=345` (Header: `sCart: 345`)
      *
      *  @apiBody {String} name Ім’я
      *  @apiBody {String} [lastname] Прізвище
@@ -54,21 +44,8 @@ final class RegisterController extends Controller
         /** @var User $user */
         $user = StoreUserAction::run($request->validated());
 
-        //event(new Registered($user));
-
-        // VISIT
-//        \App\Actions\VisitAction::run('register', $user);
-
-//        if (\Domain::getOpt('users.need_verified_email')) {
-//            return response()->json([
-//                'message' => trans('auth.register_need_verify_email'),
-//                'mail_service_url' => EmailServices::findByEmail($request->email, 'url'),
-//                'state' => 'unverified',
-//            ]  /*+ $this->authResource($user)*/);
-//        }
-
         return response()->json([
-            'message' => trans('auth.register'),
+            'message' => 'Вітаємо! Реєстрація успішна',
             'state' => 'active',
         ] + $this->authResource($user));
     }

@@ -24,7 +24,7 @@ final class MediaShowResource extends JsonResource
             'url' => $fullUrl,
 //            'mime_type' => $this->mime_type,
 //            'is_main' => boolval($this->is_main),
-            'gender' => Arr::get($this->custom_properties, 'gender', ''),
+//            'gender' => Arr::get($this->custom_properties, 'gender', ''),
             'conversions' => $this->when(boolval($a = $this->getConversions()) , fn() => $a),
         ];
     }

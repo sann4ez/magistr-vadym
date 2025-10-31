@@ -4,7 +4,6 @@ namespace App\Http\Admin\Requests;
 
 use App\Models\User;
 use App\Rules\UniqueModel;
-use Illuminate\Validation\Rule;
 
 final class UserRequest extends FormRequest
 {
@@ -23,7 +22,6 @@ final class UserRequest extends FormRequest
             'middlename' => 'nullable|string',
             'email' => ['required', 'email:strict', new UniqueModel(User::class, 'email', $id),],
             'login' => ['nullable', 'string', new UniqueModel(User::class, 'login', $id),],
-//            'status' => ['required', 'required', Rule::in(User::statusesList('key'))],
             'comment' => 'nullable|string',
         ];
 

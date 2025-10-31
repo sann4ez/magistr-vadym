@@ -1,27 +1,17 @@
-@php($group = \Domain::getId())
-@php(\Variable::setGroup($group))
-
 <div class="card">
     <div class="card-header d-flex p-0">
         <h3 class="card-title p-3">Списки</h3>
         <ul class="nav nav-pills ml-auto p-2">
             @foreach(\App\Models\Item::typesList() as $type)
-                @if(in_array($type['key'], \Domain::getOpt('settings.items', [])))
-                    <li class="nav-lead"><a class="nav-link @if($loop->first) active @endif" href="#tab_{{ $type['key'] }}" data-toggle="tab">{{ $type['title'] }}</a></li>
-                @endif
+                <li class="nav-lead"><a class="nav-link @if($loop->first) active @endif" href="#tab_{{ $type['key'] }}" data-toggle="tab">{{ $type['title'] }}</a></li>
             @endforeach
-            {{--
-            @can('settings.system')
-            <li class="nav-lead"><a class="nav-link" href="#tab_settings" data-toggle="tab">Налаштування</a></li>
-            @endcan
-            --}}
         </ul>
     </div>
 
     <div class="card-body">
         <div class="tab-content">
             @foreach(\App\Models\Item::typesList() as $type)
-            @php($items = \App\Models\Item::where('type', $type['key'])->with('translations', 'media')->get())
+            @php($items = \App\Models\Item::where('type', $type['key'])->with('media')->get())
             <div class="tab-pane @if($loop->first) active @endif" id="tab_{{ $type['key'] }}">
                 @if(!isset($type['settings']['create']) || $type['settings']['create'] ?? false)
                 <div class="text-right">

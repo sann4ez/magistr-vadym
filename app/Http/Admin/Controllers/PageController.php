@@ -30,7 +30,7 @@ final class PageController extends Controller
         $this->createBlocks($page);
 
         return redirect()->route('admin.pages.edit', $page)
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function edit(Page $page)
@@ -43,7 +43,7 @@ final class PageController extends Controller
         $page->update($request->only('name', 'body', 'template', 'status', 'slug', 'added'));
 
         return redirect()->route('admin.pages.edit', $page)
-            ->with('success', trans('alerts.update.success'));
+            ->with('success', 'Дані успішно оновлено!');
     }
 
     public function destroy(Request $request, Page $page)
@@ -51,7 +51,7 @@ final class PageController extends Controller
         $page->delete();
 
         return redirect()->route('admin.pages.index')
-            ->with('success', trans('alerts.destroy.success'));
+            ->with('success', 'Дані успішно видалено!');
     }
 
     /**
@@ -158,7 +158,7 @@ final class PageController extends Controller
         $page->blocks()->wherePivotIn('id', Arr::wrap($request->ids))->detach();
 
         return redirect()->back()
-            ->with('success', trans('alerts.destroy.success'));
+            ->with('success', 'Дані успішно видалено!');
     }
 
     /**
@@ -182,31 +182,6 @@ final class PageController extends Controller
         }
 
         return response()
-            ->json(['message' => trans('alerts.update.success')]);
+            ->json(['message' => 'Дані успішно оновлено!']);
     }
-
-//    public function seoEdit(Request $request, Page $page)
-//    {
-//        return response()->json([
-//            'html' => view('admin.pages.modals.seo', \compact('page'))->render()
-//        ]);
-//    }
-
-//    /**
-//     * @param SeoRequest $request
-//     * @param Page $page
-//     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-//     */
-//    public function seoSave(SeoRequest $request, Page $page)
-//    {
-//        $page->saveSeo($request->seo ?: [], $request->only('slug', 'group'));
-//
-//        if ($request->ajax()) {
-//            return response()
-//                ->json(['message' => trans('alerts.update.success')]);
-//        }
-//
-//        return redirect()->back()
-//            ->with('success', trans('alerts.update.success'));
-//    }
 }

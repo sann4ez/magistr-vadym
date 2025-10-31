@@ -73,7 +73,7 @@ final class LoginController extends Controller
         }
 
         return response()->json([
-            'message' => trans('auth.login'),
+            'message' => 'Успішний вхід',
             'state' => 'active',
         ] + $this->authResource($user));
     }
@@ -107,7 +107,7 @@ final class LoginController extends Controller
         $user->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => trans('auth.logout'),
+            'message' => 'Успішний вихід',
         ]);
     }
 

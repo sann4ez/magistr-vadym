@@ -61,6 +61,13 @@
         </li>
 
         <li class="nav-item">
+            <a href="/admin/settings" class="nav-link" data-pat="settings|translations">
+                <i class="nav-icon fas fa-cogs"></i>
+                <p>Налаштування</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a href="/admin/users" class="nav-link" data-pat="users">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Користувачі</p>

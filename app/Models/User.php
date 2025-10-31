@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Traits\HasDatetimeFormatterTz;
 use App\Models\Traits\HasStaticLists;
 use Fomvasss\MediaLibraryExtension\HasMedia\InteractsWithMedia;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -80,6 +79,11 @@ class User extends Authenticatable implements HasMedia
     protected $attributes = [
         'status' => self::STATUS_ACTIVE,
     ];
+
+    public function usertracks()
+    {
+        return $this->hasMany(Usertracker::class);
+    }
 
     /**
      * Часова зона поточного користувача.
@@ -228,6 +232,29 @@ class User extends Authenticatable implements HasMedia
     public function isActive()
     {
         return $this->status === self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Отримуємо безперервну кількість днів трекінгу користувача
+     *
+     * Якщо користувач вже відмітив сьогоднішній день, то до загального значення додається +1
+     *
+     * @return int
+     */
+    public function getTrackedStreak(): int
+    {
+        $streak = $this->tracked_streak;
+
+        // Перевіряємо, чи користувач відмітив сьогоднішній день
+        $hasTrackedToday = $this->usertracks()
+            ->whereDate('fixed_at', today())
+            ->exists();
+
+        if ($hasTrackedToday) {
+            $streak += 1;
+        }
+
+        return $streak;
     }
 
     public function registerMediaConversions(?Media $media = null): void

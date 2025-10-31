@@ -50,7 +50,7 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
-        return redirect()->intended($request->_destination ?: '/started');
+        return redirect()->intended($request->_destination ?: '/admin/users');
     }
 
     /**

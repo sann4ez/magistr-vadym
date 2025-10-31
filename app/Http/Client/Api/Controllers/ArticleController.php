@@ -6,9 +6,7 @@ use App\Http\Client\Api\Resources\Article\ArticleCategoryListResource;
 use App\Http\Client\Api\Resources\Article\ArticleCategoryShowResource;
 use App\Http\Client\Api\Resources\Article\ArticleListResource;
 use App\Http\Client\Api\Resources\Article\ArticleShowResource;
-//use App\Http\Client\Api\Resources\SeoResource;
 use App\Http\Client\Controllers\Controller;
-//use App\Models\Item;
 use App\Models\Post;
 use App\Models\Term;
 use Illuminate\Http\Request;
@@ -102,12 +100,9 @@ final class ArticleController extends Controller
      */
     public function category(Request $request, Term $category)
     {
-        /** @var Term $term */
         $term = $category->checkAllowed()->load('media');
 
-        return ArticleCategoryShowResource::make($term)->additional([
-//            'seo' => $term->relationLoaded('seo') ? SeoResource::make($term) : null
-        ]);
+        return ArticleCategoryShowResource::make($term);
     }
 
     /**
@@ -121,12 +116,8 @@ final class ArticleController extends Controller
         $add = [];
         if ($with = filter_explode($request->with)) {
             if (in_array('categories', $with)) {
-                $add['categories'] = ArticleCategoryListResource::collection(Term::whereVocabulary(Term::VOCABULARY_ARTICLE_CATEGORIES)/*->with('translations')*/->get());
+                $add['categories'] = ArticleCategoryListResource::collection(Term::whereVocabulary(Term::VOCABULARY_ARTICLE_CATEGORIES)->get());
             }
-
-//            if (in_array('info', $with)) {
-//                $add['info'] = Item::getList(Item::TYPE_POSTS)->where('key', Post::TYPE_ARTICLE)->first();
-//            }
         }
 
         return $add;

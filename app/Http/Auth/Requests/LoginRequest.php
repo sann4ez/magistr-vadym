@@ -64,7 +64,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey($loginValue));
 
             throw ValidationException::withMessages([
-                $requestColumn => trans('auth.failed'),
+                $requestColumn => 'Вказані облікові дані не збігаються з нашими записами.',
             ]);
         }
 
@@ -89,10 +89,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey($loginValue));
 
         throw ValidationException::withMessages([
-            $requestColumn => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            $requestColumn => "Забагато спроб входу. Будь ласка, спробуйте ще раз, через {$seconds} секунд.",
         ]);
     }
 

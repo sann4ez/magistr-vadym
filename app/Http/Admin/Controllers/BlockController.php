@@ -42,7 +42,7 @@ final class BlockController extends Controller
         }
 
         return redirect()->route('admin.blocks.edit', $block)
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function show(Block $block)
@@ -62,7 +62,7 @@ final class BlockController extends Controller
         $block->update($request->getData());
 
         return redirect()->back()
-            ->with('success', trans('alerts.update.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function destroy(Block $block)
@@ -70,7 +70,7 @@ final class BlockController extends Controller
         $block->delete();
 
         return redirect()->back()
-            ->with('success', trans('alerts.destroy.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function order(Request $request)
@@ -86,7 +86,7 @@ final class BlockController extends Controller
         }
 
         return response()
-            ->json(['message' => trans('alerts.update.success')]);
+            ->json(['message' => 'Дані успішно збережено!']);
     }
 
     public function cloning(Request $request, Block $block)

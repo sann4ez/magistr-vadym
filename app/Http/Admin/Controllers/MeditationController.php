@@ -2,13 +2,10 @@
 
 namespace App\Http\Admin\Controllers;
 
-use App\Actions\Posts\ReindexPostAction;
-//use App\Exports\PostsExport;
 use App\Http\Admin\WebDestinations;
 use App\Models\Post;
 use App\Http\Admin\Requests\PostRequest;
 use Illuminate\Http\Request;
-//use FFMpeg\FFProbe;
 
 final class MeditationController extends Controller
 {
@@ -55,23 +52,10 @@ final class MeditationController extends Controller
 
         $post->syncTerms($request->get('terms', []), [$post->category_id]);
 
-        // Аудіофайл
-//        $file = $request->file('audio');
-//        if (!is_null($file)) {
-//            $ffprobe = FFProbe::create();
-//            $duration = $ffprobe
-//                ->format($file->getRealPath())
-//                ->get('duration');
-//
-//            $post->mediaManage($request);
-//            $post->setAttribute('duration', intval($duration))->saveQuietly();
-//
-//        } else {
-            $post->mediaManage($request);
-//        }
+        $post->mediaManage($request);
 
         return redirect()->route('admin.meditations.edit', $post)
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     /**
@@ -99,23 +83,10 @@ final class MeditationController extends Controller
 
         $meditation->syncTerms($request->get('terms', []), [$meditation->category_id]);
 
-        // Аудіофайл
-//        $file = $request->file('audio');
-//        if (!is_null($file)) {
-//            $ffprobe = FFProbe::create();
-//            $duration = $ffprobe
-//                ->format($file->getRealPath())
-//                ->get('duration');
-//
-//            $meditation->mediaManage($request);
-//            $meditation->setAttribute('duration', intval($duration))->saveQuietly();
-//
-//        } else {
-            $meditation->mediaManage($request);
-//        }
+        $meditation->mediaManage($request);
 
         return redirect()->route('admin.meditations.edit', $meditation)
-            ->with('success', trans('alerts.update.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     /**
@@ -127,6 +98,6 @@ final class MeditationController extends Controller
         $meditation->delete();
 
         return redirect()->back()
-            ->with('success', trans('alerts.destroy.success'));
+            ->with('success', 'Дані успішно видалено!');
     }
 }

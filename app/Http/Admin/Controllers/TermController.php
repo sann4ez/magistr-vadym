@@ -37,13 +37,7 @@ final class TermController extends Controller
 
         $vocabulary = Term::vocabulariesList('*', 'slug')[$request->vocabulary];
 
-        $terms = Term::byVocabulary($request->vocabulary)
-            /*->with('translations')*/->get();
-
-//        if ($request->has('_export')) {
-//            $type = $request->vocabulary ?? 'terms';
-//            return Excel::download(new TermsExport($terms), "export-$type-".time().".{$request->_export}");
-//        }
+        $terms = Term::byVocabulary($request->vocabulary)->get();
 
         $tree = $terms->toTree();
 
@@ -72,7 +66,6 @@ final class TermController extends Controller
     {
         $term = Term::create($request->getData());
         $term->mediaManage($request);
-//        $term->saveSeo($request->seo ?: [], $request->only('slug', 'group'));
 
         if ($request->has('posts')) {
             $term->postsByTerms()->sync($request->get('posts'));
@@ -84,7 +77,7 @@ final class TermController extends Controller
 
         return redirect()
             ->route('admin.terms.edit', [$term, 'vocabulary' => $term->vocabulary])
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     /**
@@ -112,7 +105,6 @@ final class TermController extends Controller
     {
         $term->update($request->getData());
         $term->mediaManage($request);
-//        $term->saveSeo($request->seo ?: [], $request->only('slug', 'group'));
 
         if ($request->has('posts')) {
             $term->postsByTerms()->sync($request->get('posts'));
@@ -124,7 +116,7 @@ final class TermController extends Controller
 
         return redirect()
             ->route('admin.terms.edit', [$term, 'vocabulary' => $term->vocabulary])
-            ->with('success', trans('alerts.update.success'));
+            ->with('success', 'Дані успішно оновлено!');
     }
 
     /**
@@ -136,14 +128,14 @@ final class TermController extends Controller
         if ($term->children->count()) {
             return redirect()
                 ->to($this->destinationUrl(route('admin.terms.index', ['vocabulary' => $term->vocabulary])))
-                ->with('error', trans('alerts.destroy.error_children'));
+                ->with('error', 'Помилка видалення! Для видалення елемента, потрібно видалити всі його дочірні елементи.');
         }
 
         $term->delete();
 
         return redirect()
             ->to($this->destinationUrl(route('admin.terms.index', ['vocabulary' => $term->vocabulary])))
-            ->with('success', trans('alerts.destroy.success'));
+            ->with('success', 'Дані успішно видалено!');
     }
 
     /**
@@ -164,7 +156,7 @@ final class TermController extends Controller
         }
 
         return response()
-            ->json(['message' => trans('alerts.update.success')], Response::HTTP_ACCEPTED);
+            ->json(['message' => 'Дані успішно оновлено!'], Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -201,29 +193,4 @@ final class TermController extends Controller
             })
         ]);
     }
-
-    public function seoEdit(Request $request, Term $term)
-    {
-        return response()->json([
-            'html' => view('admin.terms.modals.seo', \compact('term'))->render()
-        ]);
-    }
-
-//    /**
-//     * @param SeoRequest $request
-//     * @param Term $term
-//     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-//     */
-//    public function seoSave(SeoRequest $request, Term $term)
-//    {
-//        $term->saveSeo($request->seo ?: [], $request->only('slug', 'group'));
-//
-//        if ($request->ajax()) {
-//            return response()
-//                ->json(['message' => trans('alerts.update.success')]);
-//        }
-//
-//        return redirect()->back()
-//            ->with('success', trans('alerts.update.success'));
-//    }
 }

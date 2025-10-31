@@ -40,7 +40,7 @@ final class ProfileController extends Controller
         $user->update($data);
 
         return redirect()->back()
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function options(Request $request)

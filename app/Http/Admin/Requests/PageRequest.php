@@ -23,7 +23,6 @@ final class PageRequest extends FormRequest
                 'nullable',
                 'string',
                 'alpha_dash',
-                //Rule::unique('pages')->ignore(optional($this->page)->id),
             ],
             'added' => 'nullable|array',
         ];
@@ -38,9 +37,5 @@ final class PageRequest extends FormRequest
                 ]);
             }
         }
-
-//        $this->merge([
-//            'added' => json_decode($this->input('added'), true),
-//        ]);
     }
 }

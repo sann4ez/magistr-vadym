@@ -48,6 +48,16 @@ Route::group([
     // SUGGESTS
     Route::get('suggest/posts', [\App\Http\Admin\Controllers\SuggestController::class, 'posts'])->name('suggest.posts');
     Route::get('suggest/pages', [\App\Http\Admin\Controllers\SuggestController::class, 'pages'])->name('suggest.pages');
+
+    // SETTINGS
+    Route::redirect('settings', 'settings/items');
+    Route::get('settings/{section}', [\App\Http\Admin\Controllers\SettingsController::class, 'edit'])->name('settings.edit');
+    Route::post('settings/save', [\App\Http\Admin\Controllers\SettingsController::class, 'save'])->name('settings.save');
+
+    // ITEMS
+    Route::resource('items', \App\Http\Admin\Controllers\ItemController::class, ['except' => ['show']]);
+    Route::post('items/{item}/editable', [\App\Http\Admin\Controllers\ItemController::class, 'editable'])->name('items.editable');
+    Route::post('items/order', [\App\Http\Admin\Controllers\ItemController::class, 'order'])->name('items.order');
 });
 
 Route::group([

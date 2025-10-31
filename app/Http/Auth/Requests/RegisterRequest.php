@@ -33,6 +33,5 @@ class RegisterRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->prepareForValidationPhoneValues('phone');
-        //$this->prepareForValidationDateValues('birthdate');
     }
 }

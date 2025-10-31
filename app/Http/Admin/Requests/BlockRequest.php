@@ -18,7 +18,6 @@ class BlockRequest extends FormRequest
         return [
             'slug' => ['sometimes', 'string'],
             'status' => ['required', Rule::in(Block::statusesList('key'))],
-//            'type' => ['required', Rule::in(Block::typesList('key'))],
             'name' => ['nullable', 'string', 'max:10000'],
             'desc' => ['nullable', 'string'],
             'content' => ['nullable', 'array'],

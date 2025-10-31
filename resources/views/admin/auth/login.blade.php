@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Увійдіть, щоб почати сеанс</p>
         @if (session('status'))
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}
@@ -30,10 +30,5 @@
             </div>
         </div>
         {!! Lte3::formClose() !!}
-
-        {{--        TODO Відновлення паролю для адміна  --}}
-        {{--        <p class="mb-1">--}}
-        {{--            <a href="/forgot-password">Restore password</a>--}}
-        {{--        </p>--}}
     </div>
 @endsection

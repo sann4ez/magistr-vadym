@@ -111,12 +111,9 @@ final class MeditationController extends Controller
      */
     public function category(Request $request, Term $category)
     {
-        /** @var Term $term */
         $term = $category->checkAllowed()->load('media');
 
-        return MeditationCategoryShowResource::make($term)->additional([
-//            'seo' => $term->relationLoaded('seo') ? SeoResource::make($term) : null
-        ]);
+        return MeditationCategoryShowResource::make($term);
     }
 
     /**
@@ -132,10 +129,6 @@ final class MeditationController extends Controller
             if (in_array('categories', $with)) {
                 $add['categories'] = MeditationCategoryListResource::collection(Term::whereVocabulary(Term::VOCABULARY_MEDITATION_CATEGORIES)->with('translations')->get());
             }
-
-//            if (in_array('info', $with)) {
-//                $add['info'] = Item::getList(Item::TYPE_POSTS)->where('key', Post::TYPE_MEDITATION)->first();
-//            }
         }
 
         return $add;

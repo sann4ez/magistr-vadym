@@ -32,11 +32,10 @@ final class UserController extends Controller
     {
         /** @var User $user */
         $user = StoreUserAction::run($request->all() + ['source' => 'manager']);
-        $user->mediaManage($request);
 
         return redirect()
             ->route('admin.users.edit', $user)
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function show(User $user)
@@ -55,11 +54,9 @@ final class UserController extends Controller
     {
         $user = UpdateUserAction::run($user, $request->all());
 
-        $user->mediaManage($request);
-
         return redirect()
             ->route('admin.users.edit', $user)
-            ->with('success', trans('alerts.store.success'));
+            ->with('success', 'Дані успішно збережено!');
     }
 
     public function destroy(Request $request, User $user)
@@ -72,6 +69,6 @@ final class UserController extends Controller
 
         return redirect()
             ->route('admin.users.index')
-            ->with('success', trans('alerts.destroy.success'));
+            ->with('success', 'Дані успішно видалено!');
     }
 }
