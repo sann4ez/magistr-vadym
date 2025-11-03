@@ -18,6 +18,6 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
-EXPOSE 8080
+EXPOSE 9000
 
-CMD php -S 0.0.0.0:${PORT:-8080} -t public
+CMD php -S 0.0.0.0:${PORT:-9000} -t public
