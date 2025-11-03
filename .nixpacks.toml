@@ -1,28 +1,15 @@
 [phases.setup]
-nixPkgs = ["php", "composer", "nodejs", "yarn"]
+aptPkgs = ["libjpeg-dev", "libpng-dev", "libwebp-dev", "libzip-dev", "libonig-dev", "libxml2-dev"]
 
 [phases.install]
 cmds = [
+  "install-php-extensions exif gd pdo_mysql mbstring tokenizer xml dom fileinfo",
   "composer install --no-interaction --prefer-dist --optimize-autoloader",
   "npm install",
   "npm run build",
   "php artisan key:generate --force",
   "php artisan migrate --force",
   "php artisan db:seed --class=PrimarySeeder --force"
-]
-
-[phases.build]
-cmds = [
-  "mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache",
-  "chmod -R a+rw storage",
-  "php artisan config:cache",
-  "php artisan route:cache",
-  "php artisan view:cache"
-]
-
-[phases.extensions]
-cmds = [
-  "install-php-extensions ctype curl dom fileinfo filter hash mbstring openssl pcre pdo session tokenizer xml pdo_mysql exif"
 ]
 
 [start]
