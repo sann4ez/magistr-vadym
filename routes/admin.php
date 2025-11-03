@@ -41,7 +41,7 @@ Route::group([
 
     // SYSTEM
     Route::view('system/logs', 'admin.system.logs')->name('admin.system.logs');
-    Route::view('system/tinker', 'admin.system.tinker')/*->middleware('can:dev')*/;
+    Route::view('system/tinker', 'admin.system.tinker');
     Route::get('flogs', [\Ka4ivan\LaravelLogger\Http\Controllers\LogViewerController::class, 'index'])->name('flogs');
     Route::view('logs', 'admin.settings.sections.logs')->name('logs.index');
 
