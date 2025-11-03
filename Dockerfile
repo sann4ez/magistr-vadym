@@ -1,42 +1,37 @@
-# базовий образ
-FROM php:8.2-fpm
+# ---------- Stage 1: Build ----------
+FROM php:8.2-fpm AS build
 
-# встановлення системних залежностей
+# Install system deps
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    zip \
-    unzip \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    default-mysql-client \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# встановити Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# встановити Node.js (для ваших npm/asset build)
+# Install Node.js 22
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm@latest
+    && apt-get install -y nodejs
 
 WORKDIR /var/www/html
 
-# копіюємо всі файли
+# Copy project files
 COPY . .
 
-# встановлюємо залежності та будимо
-RUN composer install --no-dev --optimize-autoloader \
-    && npm install \
-    && npm run build
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
+RUN npm ci && npm run build
 
-# artisan команди перед запуском
-# (мigrate, storage:link тощо — можна робити через entrypoint)
-RUN php artisan migrate --force \
-    && php artisan storage:link
+# ---------- Stage 2: Runtime ----------
+FROM php:8.2-fpm
 
-# запускаємо PHP-FPM (або artisan serve) — Railway очікує, що буде служба на $PORT
-ENV PORT 8080
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=$PORT"]
+WORKDIR /var/www/html
+
+# Copy from build
+COPY --from=build /var/www/html /var/www/html
+
+# Expose port
+EXPOSE 8080
+
+# Serve using PHP built-in server
+CMD php -S 0.0.0.0:8080 -t public
