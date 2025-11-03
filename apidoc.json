@@ -1,0 +1,9 @@
+{
+  "name": "API Documentation",
+  "version": "1.0.0",
+  "title": "API documentation",
+  "url" : "",
+  "order": [
+      "App", "Authorisation", "Profile", "Pages", "Blog", "Blocks", "Media", "Suggest"
+  ]
+}
