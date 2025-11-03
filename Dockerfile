@@ -1,5 +1,4 @@
-# Базовий образ PHP 8.2 з FPM
-FROM php:8.2-cli
+FROM php:8.2-fpm
 
 # Встановлюємо залежності
 RUN apt-get update && apt-get install -y \
@@ -8,23 +7,16 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath gd \
     && apt-get clean
 
-# Встановлюємо Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Створюємо робочу директорію
 WORKDIR /var/www
 
-# Копіюємо проект
 COPY . .
 
-# Встановлюємо права на storage і bootstrap/cache
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Встановлюємо залежності PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Виставляємо порт, який слухає контейнер
-EXPOSE 8080
+# Виставляємо порт FPM
+EXPOSE 9000
 
-# Стартовий сервер Laravel
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT}"]
+# Запускаємо php-fpm
+CMD ["php-fpm"]
