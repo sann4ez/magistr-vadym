@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
@@ -50,8 +49,6 @@ class UserSeeder extends Seeder
 
             $table[] = [$user->id, $user->email, 'password', url('/admin/login')];
         }
-
-        User::factory()->count(20)->create();
 
         $this->command->getOutput()->newLine();
         $this->command->alert('Users');
