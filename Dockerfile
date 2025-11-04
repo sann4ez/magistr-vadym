@@ -45,9 +45,9 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 #####################################
 # Expose port for Railway
 #####################################
-EXPOSE 8080
+EXPOSE 9000
 
 #####################################
 # Run Laravel dev server (для Railway)
 #####################################
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=9000"]
