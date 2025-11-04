@@ -8,7 +8,11 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libonig-dev \
-    && docker-php-ext-install pdo_mysql mbstring zip bcmath
+    libjpeg-dev \
+    libpng-dev \
+    && docker-php-ext-install pdo_mysql mbstring zip bcmath exif \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install gd
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
