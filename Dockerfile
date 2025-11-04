@@ -10,16 +10,15 @@ ENV TZ=${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 #####################################
-# Install system dependencies
+# Install PHP extensions
 #####################################
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
-    nodejs npm \
+    libpng-dev libonig-dev libxml2-dev libzip-dev zip unzip git curl \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
     && rm -rf /var/lib/apt/lists/*
 
 #####################################
-# Install composer
+# Install Composer
 #####################################
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -39,11 +38,6 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 #####################################
-# Build frontend
-#####################################
-RUN npm ci --silent && npm run build
-
-#####################################
 # Set permissions
 #####################################
 RUN chown -R www-data:www-data storage bootstrap/cache
@@ -54,6 +48,6 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8080
 
 #####################################
-# Run Laravel dev server (or php-fpm)
+# Run Laravel dev server (для Railway)
 #####################################
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
