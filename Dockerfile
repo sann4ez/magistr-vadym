@@ -1,41 +1,51 @@
 # ---------- Stage 1: Build ----------
 FROM php:8.2-fpm AS build
 
-# Встановлюємо системні пакети
-RUN apt-get update && apt-get install -y \
+# Встановлюємо системні залежності для Laravel та Node
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+    nodejs npm \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Встановлюємо composer
+# Встановлюємо Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Копіюємо тільки залежності Laravel для кешування
 WORKDIR /var/www/html
-
-# Копіюємо файли проекту
-COPY . .
-
-# Встановлюємо PHP-залежності
+COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Встановлюємо Node.js (для build frontend)
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs
+# Копіюємо весь проект
+COPY . .
 
-# Будуємо assets
+# Збираємо фронтенд
 RUN npm install && npm run build
+
+# Кешуємо Laravel (config, route, view)
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
 # ---------- Stage 2: Runtime ----------
 FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
-# Копіюємо лише готовий код з першого етапу
+# Копіюємо зібраний проект та всі кеші
 COPY --from=build /var/www/html /var/www/html
 
-# Кешування конфігів і маршрутів
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+# Встановлюємо мінімальні runtime-залежності
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpng-dev libonig-dev libxml2-dev libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Railway автоматично створює змінну PORT, тому слухаємо її
-EXPOSE ${PORT}
+# Виставляємо права на storage і bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Запускаємо Laravel через вбудований сервер
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT}"]
+# Порт для php-fpm (Nginx/Apache буде проксувати)
+EXPOSE 9000
+
+# Запуск php-fpm
+CMD ["php-fpm"]
