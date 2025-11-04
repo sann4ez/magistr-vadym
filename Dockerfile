@@ -1,6 +1,7 @@
+# Базовий PHP 8.4 з FPM
 FROM php:8.4-fpm
 
-# System dependencies
+# Системні залежності
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
@@ -10,26 +11,29 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libjpeg-dev \
     libpng-dev \
+    libwebp-dev \
     && docker-php-ext-install pdo_mysql mbstring zip bcmath exif \
-    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-configure gd --with-jpeg --with-webp \
     && docker-php-ext-install gd
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Робоча директорія
 WORKDIR /var/www/html
 
-# Copy app
+# Копіюємо код
 COPY . .
 
-# Install dependencies
+# Встановлюємо залежності
 RUN composer install --optimize-autoloader --no-dev
 
-# Permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Права на storage і cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Виставляємо порт для Railway
+EXPOSE 8080
+
+# Вбудований PHP сервер (прямий доступ через Railway edge)
+CMD php -S 0.0.0.0:8080 -t public
