@@ -1,51 +1,59 @@
-# ---------- Stage 1: Build ----------
-FROM php:8.2-fpm AS build
+# ---------- Base Laravel image ----------
+ARG PHP_VERSION=8.2-fpm
+FROM php:${PHP_VERSION}
 
-# Встановлюємо системні залежності для Laravel та Node
+#####################################
+# Set timezone
+#####################################
+ARG TZ=UTC
+ENV TZ=${TZ}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#####################################
+# Install system dependencies
+#####################################
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
     nodejs npm \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
     && rm -rf /var/lib/apt/lists/*
 
-# Встановлюємо Composer
+#####################################
+# Install composer
+#####################################
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Копіюємо тільки залежності Laravel для кешування
+#####################################
+# Set working directory
+#####################################
 WORKDIR /var/www/html
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Копіюємо весь проект
+#####################################
+# Copy project files
+#####################################
 COPY . .
 
-# Збираємо фронтенд
-RUN npm install && npm run build
+#####################################
+# Install PHP dependencies
+#####################################
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Кешуємо Laravel (config, route, view)
-RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+#####################################
+# Build frontend
+#####################################
+RUN npm ci --silent && npm run build
 
-# ---------- Stage 2: Runtime ----------
-FROM php:8.2-fpm
-
-WORKDIR /var/www/html
-
-# Копіюємо зібраний проект та всі кеші
-COPY --from=build /var/www/html /var/www/html
-
-# Встановлюємо мінімальні runtime-залежності
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpng-dev libonig-dev libxml2-dev libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
-    && rm -rf /var/lib/apt/lists/*
-
-# Виставляємо права на storage і bootstrap/cache
+#####################################
+# Set permissions
+#####################################
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Порт для php-fpm (Nginx/Apache буде проксувати)
-EXPOSE 9000
+#####################################
+# Expose port for Railway
+#####################################
+EXPOSE 8080
 
-# Запуск php-fpm
-CMD ["php-fpm"]
+#####################################
+# Run Laravel dev server (or php-fpm)
+#####################################
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
