@@ -67,8 +67,8 @@ final class LoginController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                $this->loginVia => [trans('auth.failed')],
-                'login' => [trans('auth.failed')],
+                $this->loginVia => ['Вказані облікові дані не збігаються з нашими записами.'],
+                'login' => ['Вказані облікові дані не збігаються з нашими записами.'],
             ]);
         }
 
