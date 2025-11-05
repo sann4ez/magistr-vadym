@@ -74,8 +74,8 @@ class Post extends Model implements HasMedia
     public static function booted()
     {
         self::saving(function (self $post) {
-            if ($post->type === self::TYPE_ARTICLE) {
-                $post->duration = calculate_reading_time($post->body, 1500, 'json') * 60;
+            if (in_array($post->type, [self::TYPE_ARTICLE, self::TYPE_MEDITATION])) {
+                $post->duration = calculate_reading_time($post->body, 1500, 'html');
             }
         });
 
