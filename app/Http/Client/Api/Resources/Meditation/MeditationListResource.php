@@ -20,6 +20,7 @@ class MeditationListResource extends JsonResource
             'slug' => $this->slug,
             'type' => $this->type,
             'name' => $this->name,
+            'teaser' => $this->getTeaser(),
             'body' => $this->body,
             'duration' => $this->duration,
             'states' => $this->getClientStates(),
