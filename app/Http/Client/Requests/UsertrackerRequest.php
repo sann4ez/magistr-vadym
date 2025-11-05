@@ -16,7 +16,7 @@ final class UsertrackerRequest extends FormRequest
         return [
             'emotions'   => 'array',
             'emotions.*' => 'exists:items,id',
-            'mood'       => 'required|integer|between:1,5',
+            'mood'       => 'required|integer|between:1,10',
             'anxiety'    => 'integer|between:1,10',
             'comment'    => 'nullable|string|max:4096',
         ];

@@ -7,6 +7,11 @@
     <div class="col-md-9">
         {!! Lte3::text('name', null, ['label' => 'Назва', 'required' => true]) !!}
 
+        {!! Lte3::textarea('teaser', null, [
+            'label' => 'Короткий опис',
+            'rows' => 4,
+        ]) !!}
+
         {!! Lte3::textarea('body', null, ['class' => 'f-tinymce']) !!}
     </div>
 
