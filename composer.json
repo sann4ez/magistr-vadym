@@ -22,6 +22,7 @@
         "lorisleiva/laravel-actions": "^2.9",
         "propaganistas/laravel-phone": "^6.0",
         "spatie/laravel-permission": "^6.21",
+        "spatie/laravel-web-tinker": "^1.10",
         "unisharp/laravel-filemanager": "^2.12"
     },
     "require-dev": {
@@ -33,8 +34,7 @@
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3",
-        "spatie/laravel-web-tinker": "^1.10"
+        "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
         "psr-4": {
