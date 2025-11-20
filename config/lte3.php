@@ -4,7 +4,7 @@ return [
     /*
      * HTML Logo
      */
-    'logo' => '<b>Magistr</b>',
+    'logo' => '<b>Breez</b>',
 
     /*
      * Dashboard Home
